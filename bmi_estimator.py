@@ -27,22 +27,27 @@ st.markdown("""
     label, input, .stNumberInput, .stButton, .stMarkdown {
         color: white !important;
     }
+    a {
+        color: #1DA1F2 !important;
+    }
     </style>
 """, unsafe_allow_html=True)
 
 # ====================
-# 🚀 The Professor's BMI Estimator App
+# 🚀 App Title
 # ====================
 st.title("⚖️ The Professor’s BMI Estimator")
 st.markdown("This app calculates your **Body Mass Index (BMI)** and classifies it based on WHO standards.")
 
-# 📥 User Inputs with Hints
+# ====================
+# 📥 User Input Section with Tooltips
+# ====================
 weight = st.number_input(
     "Enter your weight (kg)",
     min_value=1.0,
     step=0.1,
     format="%.2f",
-    help="Enter your current body weight in kilograms (e.g., 70.5)"
+    help="Your body weight in kilograms (e.g., 65.5)"
 )
 
 height = st.number_input(
@@ -50,43 +55,52 @@ height = st.number_input(
     min_value=0.5,
     step=0.01,
     format="%.2f",
-    help="Enter your height in meters (e.g., 1.75)"
+    help="Your height in meters (e.g., 1.75)"
 )
 
-# 🧮 Calculate on button click
+# =========================
+# 🧮 BMI Calculation Logic
+# =========================
 if st.button("Calculate BMI"):
     if height > 0 and weight > 0:
         bmi = weight / (height ** 2)
 
-        # 🏷️ Classification and health message
+        # 🏷️ Classification
         if bmi < 18.5:
             bmi_class = "Underweight"
-            health_msg = "⚠️ You're underweight. It's important to eat well-balanced meals and consult with a healthcare provider to ensure you're on a healthy path."
+            health_msg = "⚠️ You are underweight. Please consider a balanced diet and consult a healthcare professional."
         elif bmi < 25:
             bmi_class = "Normal"
             health_msg = "✅ Great job! You're within a healthy weight range. Keep up your good habits and stay consistent!"
         elif bmi < 30:
             bmi_class = "Overweight"
-            health_msg = "⚠️ You're slightly above the recommended weight range. Consider adjusting your diet and activity level to avoid long-term health risks."
+            health_msg = "⚠️ You're slightly overweight. Consider regular exercise and healthy eating to maintain balance."
         elif bmi < 35:
             bmi_class = "Obese Class I"
-            health_msg = "⚠️ Your BMI falls in Obese Class I. Please take steps to manage your weight with lifestyle changes and consider medical advice."
+            health_msg = "🚨 You're in Obese Class I. It's important to review your lifestyle and seek professional advice."
         elif bmi < 40:
             bmi_class = "Obese Class II"
-            health_msg = "⚠️ Your BMI indicates Obese Class II. Health risks increase at this level. It's highly advised to speak to a healthcare professional."
+            health_msg = "🚨 You are in Obese Class II. Prioritize your health with urgent lifestyle adjustments and medical support."
         else:
             bmi_class = "Obese Class III"
-            health_msg = "🚨 Your BMI is in the highest obesity category. Please prioritize your health by seeking medical guidance and adopting healthier habits."
+            health_msg = "🚨 You are in Obese Class III (severe). Immediate medical intervention and lifestyle changes are crucial."
 
-        # 📊 Output
+        # 📊 Display Results
         st.success(f"✅ Your BMI is **{bmi:.2f}**")
         st.info(f"**Classification:** {bmi_class}")
-        st.warning(health_msg) if "⚠️" in health_msg or "🚨" in health_msg else st.success(health_msg)
+
+        # 💬 Personalized Health Message
+        if "⚠️" in health_msg or "🚨" in health_msg:
+            st.warning(health_msg)
+        else:
+            st.success(health_msg)
 
     else:
-        st.error("Please provide valid positive numbers for height and weight.")
+        st.error("Please provide valid positive numbers for both height and weight.")
 
-# 📝 Footer
+# ====================
+# 📝 Footer Section
+# ====================
 st.markdown("---")
 st.markdown(
     """
