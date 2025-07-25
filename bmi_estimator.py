@@ -27,9 +27,9 @@ st.caption("💡 Enter your height in meters (e.g., 1.75)")
 height = st.number_input("Enter your height (meters)", min_value=0.5, step=0.01, format="%.2f")
 
 # =======================
-# ⚙️ BMI Calculation
+# 🧮 Calculate BMI Button
 # =======================
-if weight and height:
+if st.button("📏 Calculate BMI"):
     bmi = round(weight / (height ** 2), 2)
 
     # Determine BMI Class
@@ -58,7 +58,6 @@ if weight and height:
     st.success(f"✅ Your BMI is **{bmi}**")
     st.markdown(f"**Classification**: {bmi_class}")
 
-    # Display appropriate message
     if "⚠️" in health_msg or "🚨" in health_msg:
         st.warning(health_msg)
     else:
@@ -72,4 +71,3 @@ st.caption("Built with ❤️ using Streamlit • Based on WHO BMI classificatio
 st.caption("Created by **Tolulope Emuleomo** aka **Data Professor** 🧠")
 st.caption("🔗 [Twitter: @dataprofessor_](https://twitter.com/dataprofessor_) • [GitHub: dataprofessor290](https://github.com/dataprofessor290)")
 st.caption("💼 Data Scientist")
-
